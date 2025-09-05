@@ -1,0 +1,23 @@
+#buttonCountInput {
+    width: 100px;
+}
+
+#buttonContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+#shuffledButtonContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#messageContainer {
+    padding: 10px;
+    font-size: 1.6em;
+    font-weight: bolder;
+    color: red;
+}
