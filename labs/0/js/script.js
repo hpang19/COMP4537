@@ -28,8 +28,8 @@ class Timer {
 
 class Game {
     constructor() {
-        this.windowWidth = window.screen.width;
-        this.windowHeight = window.screen.height;
+        this.windowWidth = window.innerWidth;
+        this.windowHeight = window.innerHeight;
         this.colors = ['red', 'orange', 'yellow', 'green', 'blue', 'pink', 'purple'];
         this.timer = new Timer();
         this.buttons = [];
@@ -76,6 +76,8 @@ class Game {
 
     shuffle() {
         this.clearContainer(this.shuffledButtonContainer);
+        this.windowWidth = window.innerWidth;
+        this.windowHeight = window.innerHeight;
         this.buttons.sort(() => 0.5 - Math.random());
         this.buttons.forEach((button) => {
             const marginLeft = Math.max(Math.random() * this.windowWidth - 100, 0);
