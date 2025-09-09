@@ -5,6 +5,9 @@ class Timer {
         this.timeoutId = null;
     }
 
+    /*
+    chatGPT is used here to remind me correct syntax for the timeout function.
+    */
     pause(time) {
         this.cancel();
         return new Promise(resolve => {
