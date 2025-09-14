@@ -2,7 +2,8 @@ import { PAGE_TEXT } from '../lang/messages/en/user.js';
 
 class Page {
     constructor() {
-        this.currentPage = path.substring(window.location.pathname.lastIndexOf('/'));
+        const path = window.location.pathname;
+        this.currentPage = path.substring(path.lastIndexOf('/'));
         console.log(this.currentPage, " loaded...");
         this.texts = PAGE_TEXT[this.currentPage] || {};
         this.render();
