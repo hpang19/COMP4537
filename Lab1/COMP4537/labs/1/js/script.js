@@ -1,4 +1,4 @@
-import { PAGE_TEXT } from '/lang/messages/en/user.js';
+import { PAGE_TEXT } from '../lang/messages/en/user.js';
 
 class Page {
     constructor() {
