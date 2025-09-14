@@ -2,6 +2,9 @@ import { PAGE_TEXT } from '../lang/messages/en/user.js';
 
 class Page {
     constructor() {
+        console.log(1, window);
+        console.log(2, window.location);
+        console.log(3, window.location.pathname);
         this.currentPage = window.location.pathname;
         console.log(this.currentPage, " loaded...");
         this.texts = PAGE_TEXT[this.currentPage] || {};
