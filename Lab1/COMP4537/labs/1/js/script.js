@@ -3,7 +3,7 @@ import { PAGE_TEXT } from '../lang/messages/en/user.js';
 class Page {
     constructor() {
         this.currentPage = window.location.pathname;
-        console.log(currentPage, " loaded...");
+        console.log(this.currentPage, " loaded...");
         this.texts = PAGE_TEXT[this.currentPage] || {};
         this.render();
         // WebStorage.clearNote();
