@@ -9,6 +9,7 @@ class Page {
     }
 
     render() {
+        document.title = this.texts.title;
         document.addEventListener("DOMContentLoaded", () => {
             if (this.texts.title) {
                 document.getElementById("title").textContent = this.texts.title;
@@ -39,38 +40,60 @@ class Page {
 }
 
 class WebStorage {
+    static STORAGE_KEY = "notes";
+
     static clearNote() {
-        localStorage.clear();
+        localStorage.removeItem(WebStorage.STORAGE_KEY);
     }
 
     static saveNote(note, index) {
-        localStorage.setItem(index, note);
-        WebStorage.update_timestamp("/writer.html");
+        const data = WebStorage._loadData();
+        data.notes[index] = note;
+        data.timestamp = new Date();
+        WebStorage._saveData(data);
+        WebStorage.update_timestamp("/writer.html", data.timestamp);
     }
 
     static removeNote(index) {
-        localStorage.removeItem(index);
-        WebStorage.update_timestamp("/writer.html");
+        const data = WebStorage._loadData();
+        delete data.notes[index];
+        data.timestamp = new Date();
+        WebStorage._saveData(data);
+        WebStorage.update_timestamp("/writer.html", data.timestamp);
     }
 
     static loadNotes() {
-        const allNotes = {};
-        for (let i = 0; i < localStorage.length; i++) {
-            const key = localStorage.key(i);
-            allNotes[key] = localStorage.getItem(key);
-        }
-        return allNotes;
+        const data = WebStorage._loadData();
+        return data.notes;
     }
 
-    static update_timestamp(currentPage, currentTime=new Date()) {
-        const timestamp = currentTime.toLocaleTimeString();
+    static getTimestamp() {
+        const data = WebStorage._loadData();
+        return new Date(data.timestamp);
+    }
+
+    static update_timestamp(currentPage, currentTime = new Date()) {
+        const timestamp = currentTime;
         const timestampMsg = document.getElementById("timestamp_msg");
         if (timestampMsg) {
             timestampMsg.textContent =
-                PAGE_TEXT[currentPage].timestamp_msg + timestamp;
+                PAGE_TEXT[currentPage].timestamp_msg + timestamp.toLocaleString();
         }
     }
+
+    static _loadData() {
+        const notes = localStorage.getItem(WebStorage.STORAGE_KEY);
+        if (notes) {
+            return JSON.parse(notes);
+        }
+        return { timestamp: null, notes: {} };
+    }
+
+    static _saveData(notes) {
+        localStorage.setItem(WebStorage.STORAGE_KEY, JSON.stringify(notes));
+    }
 }
+
 
 class Note {
     constructor(text, hash = Math.random().toString(36).substring(2, 10)) {
@@ -117,6 +140,7 @@ class Writer {
     }
 
     renderNotes() {
+        WebStorage.update_timestamp("/writer.html", WebStorage.getTimestamp());
         this.container.innerHTML = "";
         this.notes.forEach(note => note.render(this.container, this.saveNote.bind(this, note), this.removeNote.bind(this, note)));
     }
@@ -141,9 +165,7 @@ class Writer {
 
     removeNote(note) {
         this.notes = this.notes.filter(n => n !== note);
-        console.log(note);
         WebStorage.removeNote(note.getIndex());
-        console.log(note);
     }
 }
 
