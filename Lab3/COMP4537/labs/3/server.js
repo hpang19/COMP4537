@@ -55,4 +55,4 @@ http.createServer((req, res) => {
         res.write(getErrorMessage(true, ...error));
         res.end();
     }
-}).listen(8888);
+}).listen(process.env.PORT || 8888);

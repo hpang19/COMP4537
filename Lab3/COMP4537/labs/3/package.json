@@ -1,0 +1,14 @@
+{
+    "name": "comp4537-lab3-server",
+    "version": "1.0.0",
+    "description": "Simple Node.js server for COMP4537 Lab 3",
+    "main": "server.js",
+    "scripts": {
+      "start": "node server.js"
+    },
+    "engines": {
+      "node": ">=18.0.0"
+    },
+    "dependencies": {}
+  }
+  
